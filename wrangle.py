@@ -60,3 +60,17 @@ def wrangle(df):
         'PoolQC', 'MiscFeature'])
 
     return df
+
+
+
+# Add age columns
+def wrangle_year(df):
+    df["Age"] = df["YrSold"] - df["YearBuilt"]
+    df["RemodAddAge"] = df["YrSold"] - df["YearRemodAdd"]
+    df["GrgAge"] = df["YrSold"] - df["GarageYrBlt"]
+
+    # Drop year columns
+    df = df.drop(columns=[
+        'YearBuilt', 'YearRemodAdd', 
+        'GarageYrBlt', 'YrSold'])
+    return df

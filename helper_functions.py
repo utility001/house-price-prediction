@@ -18,23 +18,23 @@ def missing_data(data, show_all=True):
     # Calculate percentage of missing values for each column
     percent = (data.isnull().sum() / data.isnull().count() * 100)
     # Concatenate total and percent missing values into a DataFrame
-    tt = pd.concat([total, percent], axis=1, keys=['Total', 'Percent'])
+    tt = pd.concat([total, percent], axis=1, keys=['Total missing values', 'Percent'])
     
     # Get data types of each column
     types = []
     for col in data.columns:
         dtype = str(data[col].dtype)
         types.append(dtype)
-    tt['Types'] = types
+    tt['dtype'] = types
     
     # Return either all columns or only columns with missing values based on show_all parameter
     if show_all:
         return tt
     else:
-        return tt[tt['Total'] > 0]
+        return tt[tt['Total missing values'] > 0]
 
 
-def find_constant_columns(data):
+def find_constant_columns(df):
     """
     Find columns in a DataFrame containing constant values.
 
@@ -45,9 +45,9 @@ def find_constant_columns(data):
         list: A list containing the names of columns with constant values.
     """
     constant_columns = []
-    for column in data.columns:
+    for column in df.columns:
         # Get unique values in the column
-        if data[column].nunique() == 1:
+        if df[column].nunique() == 1:
             constant_columns.append(column)
     return constant_columns
 
